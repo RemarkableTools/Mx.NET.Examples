@@ -9,7 +9,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>Resources\remarkabletools.ico</ApplicationIcon>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,15 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="QRCoder" Version="1.4.3" />
-    <PackageReference Include="RemarkableTools.Mx.WalletConnect" Version="1.0.0" />
+    <PackageReference Include="RemarkableTools.Mx.WalletConnect" Version="2.0.0-beta.2" />
   </ItemGroup>
 
   <ItemGroup>
