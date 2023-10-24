@@ -39,6 +39,11 @@
             label2 = new Label();
             tbEGLD = new TextBox();
             tbConnectionStatus = new Label();
+            btnSignMessage = new Button();
+            lbSignature = new Label();
+            label4 = new Label();
+            label3 = new Label();
+            tbMessageToSign = new TextBox();
             ((System.ComponentModel.ISupportInitialize)qrCodeImg).BeginInit();
             SuspendLayout();
             // 
@@ -78,7 +83,6 @@
             // 
             // btnConnect
             // 
-            btnConnect.Enabled = false;
             btnConnect.FlatStyle = FlatStyle.Flat;
             btnConnect.Location = new Point(26, 513);
             btnConnect.Name = "btnConnect";
@@ -86,6 +90,7 @@
             btnConnect.TabIndex = 3;
             btnConnect.Text = "Connect";
             btnConnect.UseVisualStyleBackColor = true;
+            btnConnect.Visible = false;
             btnConnect.Click += BtnConnect_Click;
             // 
             // qrCodeImg
@@ -142,12 +147,66 @@
             tbConnectionStatus.Size = new Size(0, 20);
             tbConnectionStatus.TabIndex = 14;
             // 
+            // btnSignMessage
+            // 
+            btnSignMessage.FlatStyle = FlatStyle.Flat;
+            btnSignMessage.Location = new Point(26, 842);
+            btnSignMessage.Name = "btnSignMessage";
+            btnSignMessage.Size = new Size(131, 39);
+            btnSignMessage.TabIndex = 24;
+            btnSignMessage.Text = "Sign Message";
+            btnSignMessage.UseVisualStyleBackColor = true;
+            btnSignMessage.Click += BtnSignMessage_Click;
+            // 
+            // lbSignature
+            // 
+            lbSignature.AutoEllipsis = true;
+            lbSignature.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lbSignature.Location = new Point(97, 811);
+            lbSignature.Name = "lbSignature";
+            lbSignature.Size = new Size(522, 20);
+            lbSignature.TabIndex = 23;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(18, 811);
+            label4.Name = "label4";
+            label4.Size = new Size(75, 20);
+            label4.TabIndex = 22;
+            label4.Text = "Signature:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Location = new Point(26, 777);
+            label3.Name = "label3";
+            label3.Size = new Size(67, 20);
+            label3.TabIndex = 21;
+            label3.Text = "Message";
+            // 
+            // tbMessageToSign
+            // 
+            tbMessageToSign.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            tbMessageToSign.Location = new Point(97, 774);
+            tbMessageToSign.Name = "tbMessageToSign";
+            tbMessageToSign.Size = new Size(468, 27);
+            tbMessageToSign.TabIndex = 20;
+            tbMessageToSign.TextChanged += TbMessageToSign_TextChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
-            ClientSize = new Size(645, 774);
+            ClientSize = new Size(645, 906);
+            Controls.Add(btnSignMessage);
+            Controls.Add(lbSignature);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(tbMessageToSign);
             Controls.Add(tbConnectionStatus);
             Controls.Add(label2);
             Controls.Add(tbEGLD);
@@ -164,7 +223,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Wallet Connect - Example";
             Load += MainForm_Load;
-            Shown += MainForm_Shown;
             ((System.ComponentModel.ISupportInitialize)qrCodeImg).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -182,5 +240,10 @@
         private Label label2;
         private TextBox tbEGLD;
         private Label tbConnectionStatus;
+        private Button btnSignMessage;
+        private Label lbSignature;
+        private Label label4;
+        private Label label3;
+        private TextBox tbMessageToSign;
     }
 }
