@@ -10,11 +10,11 @@ using Mx.NET.SDK.NativeAuthServer.Entities;
 using Mx.NET.SDK.Provider;
 using Mx.NET.SDK.TransactionsManager;
 using Mx.NET.SDK.WalletConnect;
-using Mx.NET.SDK.WalletConnect.Models.Events;
 using QRCoder;
 using System.Diagnostics;
 using WalletConnectSharp.Core;
-using WalletConnectSharp.Events.Model;
+using WalletConnectSharp.Sign.Models;
+using WalletConnectSharp.Sign.Models.Engine.Events;
 using Address = Mx.NET.SDK.Core.Domain.Values.Address;
 
 namespace WinForms
@@ -66,11 +66,8 @@ namespace WinForms
             LogMessage("Looking for wallet connection...", SystemColors.ControlText);
 
             await WalletConnect.ClientInit();
-            WalletConnect.OnSessionUpdateEvent += OnSessionUpdateEvent;
-            WalletConnect.OnSessionEvent += OnSessionEvent;
             WalletConnect.OnSessionDeleteEvent += OnSessionDeleteEvent;
             WalletConnect.OnSessionExpireEvent += OnSessionExpireEvent;
-            WalletConnect.OnTopicUpdateEvent += OnTopicUpdateEvent;
 
             try
             {
@@ -114,17 +111,7 @@ namespace WinForms
             tbConnectionStatus.Text = message;
         }
 
-        private void OnSessionUpdateEvent(object? sender, GenericEvent<SessionUpdateEvent> @event)
-        {
-            Debug.WriteLine("Session Update Event");
-        }
-
-        private void OnSessionEvent(object? sender, GenericEvent<SessionEvent> @event)
-        {
-            Debug.WriteLine("Session Event");
-        }
-
-        private void OnSessionDeleteEvent(object? sender, EventArgs e)
+        private void OnSessionDeleteEvent(object? sender, SessionEvent e)
         {
             NetworkConfig = default!;
             Account = default!;
@@ -135,7 +122,7 @@ namespace WinForms
             LogMessage("Wallet disconnected", Color.Firebrick);
         }
 
-        private void OnSessionExpireEvent(object? sender, EventArgs e)
+        private void OnSessionExpireEvent(object? sender, SessionStruct e)
         {
             NetworkConfig = default!;
             Account = default!;
@@ -144,11 +131,6 @@ namespace WinForms
             btnConnect.Visible = true;
 
             LogMessage("Session expired", Color.Firebrick);
-        }
-
-        private void OnTopicUpdateEvent(object? sender, GenericEvent<TopicUpdateEvent> @event)
-        {
-            Debug.WriteLine("Topic Update Event");
         }
 
         private async void BtnConnect_Click(object sender, EventArgs e)
