@@ -49,7 +49,6 @@ namespace WinForms
             WalletConnect = new WalletConnect(metadata, PROJECT_ID, CHAIN_ID);
             _nativeAuthToken = new(new NativeAuthClientConfig()
             {
-                //Origin = metadata.Name,
                 Origin = "https://devnet.remarkable.tools/",
                 ExpirySeconds = 14400,
                 BlockHashShard = 2
