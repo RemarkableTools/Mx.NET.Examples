@@ -11,7 +11,6 @@ using Mx.NET.SDK.Provider;
 using Mx.NET.SDK.TransactionsManager;
 using Mx.NET.SDK.WalletConnect;
 using QRCoder;
-using System.Diagnostics;
 using WalletConnectSharp.Core;
 using WalletConnectSharp.Sign.Models;
 using WalletConnectSharp.Sign.Models.Engine.Events;
@@ -24,7 +23,7 @@ namespace WinForms
         const string CHAIN_ID = "D";
         const string PROJECT_ID = "c7d3aa2b21836c991357e8a56c252962";
 
-        IWalletConnect WalletConnect { get; set; }
+        private WalletConnect WalletConnect { get; set; }
 
         private readonly NativeAuthClient _nativeAuthToken = default!;
         private readonly NativeAuthServer _nativeAuthServer = default!;
@@ -36,14 +35,13 @@ namespace WinForms
         public MainForm()
         {
             InitializeComponent();
-            this.ActiveControl = qrCodeImg;
-            CheckForIllegalCrossThreadCalls = false;
+            ActiveControl = qrCodeImg;
 
             var metadata = new Metadata()
             {
                 Name = "Mx.NET.WinForms",
                 Description = "Mx.NET.WinForms login testing",
-                Icons = new[] { "https://devnet.remarkable.tools/remarkabletools.ico" },
+                Icons = ["https://devnet.remarkable.tools/remarkabletools.ico"],
                 Url = "https://devnet.remarkable.tools/"
             };
             WalletConnect = new WalletConnect(metadata, PROJECT_ID, CHAIN_ID);
@@ -55,7 +53,7 @@ namespace WinForms
             });
             var nativeAuthServerConfig = new NativeAuthServerConfig()
             {
-                AcceptedOrigins = new[] { "https://devnet.remarkable.tools/" }
+                AcceptedOrigins = ["https://devnet.remarkable.tools/"]
             };
             _nativeAuthServer = new(nativeAuthServerConfig);
         }
@@ -89,13 +87,9 @@ namespace WinForms
                     LogMessage("Connect with xPortal App", SystemColors.ControlText);
                 }
             }
-            catch (APIException)
+            catch (Exception ex)
             {
-                LogMessage("Wallet reconnected. API error", Color.Gold);
-            }
-            catch (Exception)
-            {
-                LogMessage("Could not reconnect to wallet", Color.Firebrick);
+                LogMessage(ex.Message, Color.Red);
             }
         }
 
@@ -112,29 +106,33 @@ namespace WinForms
 
         private void OnSessionDeleteEvent(object? sender, SessionEvent e)
         {
-            NetworkConfig = default!;
-            Account = default!;
-
-            btnDisconnect.Visible = false;
-            btnConnect.Visible = true;
-
-            LogMessage("Wallet disconnected", Color.Firebrick);
+            DisconnectSessionEvent("Wallet disconnected");
         }
 
         private void OnSessionExpireEvent(object? sender, SessionStruct e)
         {
+            DisconnectSessionEvent("Session expired");
+        }
+
+        private void DisconnectSessionEvent(string message)
+        {
             NetworkConfig = default!;
             Account = default!;
 
-            btnDisconnect.Visible = false;
-            btnConnect.Visible = true;
+            this.Invoke(new Action(() =>
+            {
+                btnConnect.Visible = true;
+                btnDisconnect.Visible = false;
 
-            LogMessage("Session expired", Color.Firebrick);
+                LogMessage(message, Color.Firebrick);
+            }));
         }
 
         private async void BtnConnect_Click(object sender, EventArgs e)
         {
             LogMessage("Generating QR code...", Color.Blue);
+            loading.Visible = true;
+            btnConnect.Visible = false;
 
             try
             {
@@ -146,6 +144,7 @@ namespace WinForms
                 var qrCode = new QRCode(qrCodeData);
                 qrCodeImg.BackgroundImage = qrCode.GetGraphic(4);
                 qrCodeImg.Visible = true;
+                loading.Visible = false;
 
                 LogMessage("Waiting for wallet connection...", Color.Blue);
 
@@ -163,7 +162,6 @@ namespace WinForms
                 }
 
                 qrCodeImg.Visible = false;
-                btnConnect.Visible = false;
                 btnDisconnect.Visible = true;
 
                 NetworkConfig = await NetworkConfig.GetFromNetwork(Provider);
@@ -173,11 +171,10 @@ namespace WinForms
             }
             catch (APIException)
             {
-                LogMessage("Wallet connected. API error", Color.Gold);
+                LogMessage("API error", Color.Gold);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
                 LogMessage("Wallet connection was not approved", Color.Gold);
             }
         }
@@ -195,8 +192,9 @@ namespace WinForms
             Account = default!;
 
             qrCodeImg.Visible = false;
-            btnDisconnect.Visible = false;
             btnConnect.Visible = true;
+            btnDisconnect.Visible = false;
+            lbSignature.Text = "";
 
             LogMessage("Wallet disconnected", Color.Firebrick);
         }

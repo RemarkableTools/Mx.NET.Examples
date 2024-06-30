@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
@@ -12,14 +12,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Resources\remarkabletools.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="QRCoder" Version="1.5.1" />
+    <PackageReference Include="QRCoder" Version="1.6.0" />
     <PackageReference Include="RemarkableTools.Mx.NativeAuthClient" Version="1.0.5" />
     <PackageReference Include="RemarkableTools.Mx.NativeAuthServer" Version="1.0.4" />
     <PackageReference Include="RemarkableTools.Mx.WalletConnect" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
