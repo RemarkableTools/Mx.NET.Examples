@@ -44,7 +44,9 @@
             label4 = new Label();
             label3 = new Label();
             tbMessageToSign = new TextBox();
+            loading = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)qrCodeImg).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)loading).BeginInit();
             SuspendLayout();
             // 
             // btnSendMultiple
@@ -104,7 +106,7 @@
             // 
             // tbReceiver
             // 
-            tbReceiver.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            tbReceiver.Font = new Font("Segoe UI", 11.25F);
             tbReceiver.Location = new Point(97, 610);
             tbReceiver.Name = "tbReceiver";
             tbReceiver.Size = new Size(522, 27);
@@ -113,7 +115,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Font = new Font("Segoe UI", 11.25F);
             label1.Location = new Point(26, 613);
             label1.Name = "label1";
             label1.Size = new Size(65, 20);
@@ -123,7 +125,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Font = new Font("Segoe UI", 11.25F);
             label2.Location = new Point(46, 655);
             label2.Name = "label2";
             label2.Size = new Size(45, 20);
@@ -132,7 +134,7 @@
             // 
             // tbEGLD
             // 
-            tbEGLD.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            tbEGLD.Font = new Font("Segoe UI", 11.25F);
             tbEGLD.Location = new Point(97, 652);
             tbEGLD.Name = "tbEGLD";
             tbEGLD.Size = new Size(88, 27);
@@ -141,7 +143,7 @@
             // tbConnectionStatus
             // 
             tbConnectionStatus.AutoSize = true;
-            tbConnectionStatus.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            tbConnectionStatus.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
             tbConnectionStatus.Location = new Point(26, 557);
             tbConnectionStatus.Name = "tbConnectionStatus";
             tbConnectionStatus.Size = new Size(0, 20);
@@ -161,7 +163,7 @@
             // lbSignature
             // 
             lbSignature.AutoEllipsis = true;
-            lbSignature.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lbSignature.Font = new Font("Segoe UI", 11.25F);
             lbSignature.Location = new Point(97, 811);
             lbSignature.Name = "lbSignature";
             lbSignature.Size = new Size(522, 20);
@@ -170,7 +172,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Font = new Font("Segoe UI", 11.25F);
             label4.Location = new Point(18, 811);
             label4.Name = "label4";
             label4.Size = new Size(75, 20);
@@ -180,7 +182,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Font = new Font("Segoe UI", 11.25F);
             label3.Location = new Point(26, 777);
             label3.Name = "label3";
             label3.Size = new Size(67, 20);
@@ -189,12 +191,23 @@
             // 
             // tbMessageToSign
             // 
-            tbMessageToSign.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            tbMessageToSign.Font = new Font("Segoe UI", 11.25F);
             tbMessageToSign.Location = new Point(97, 774);
             tbMessageToSign.Name = "tbMessageToSign";
             tbMessageToSign.Size = new Size(468, 27);
             tbMessageToSign.TabIndex = 20;
             tbMessageToSign.TextChanged += TbMessageToSign_TextChanged;
+            // 
+            // loading
+            // 
+            loading.Image = Properties.Resources.loading;
+            loading.Location = new Point(26, 27);
+            loading.Name = "loading";
+            loading.Size = new Size(593, 446);
+            loading.SizeMode = PictureBoxSizeMode.CenterImage;
+            loading.TabIndex = 25;
+            loading.TabStop = false;
+            loading.Visible = false;
             // 
             // MainForm
             // 
@@ -202,6 +215,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(645, 906);
+            Controls.Add(loading);
             Controls.Add(btnSignMessage);
             Controls.Add(lbSignature);
             Controls.Add(label4);
@@ -217,13 +231,14 @@
             Controls.Add(qrCodeImg);
             Controls.Add(btnConnect);
             Controls.Add(btnDisconnect);
-            Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            Font = new Font("Segoe UI", 9.75F);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Wallet Connect - Example";
             Load += MainForm_Load;
             ((System.ComponentModel.ISupportInitialize)qrCodeImg).EndInit();
+            ((System.ComponentModel.ISupportInitialize)loading).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -245,5 +260,6 @@
         private Label label4;
         private Label label3;
         private TextBox tbMessageToSign;
+        private PictureBox loading;
     }
 }
